@@ -353,11 +353,16 @@ const classPrompts = {
     //   { roomLetter: 'G', program: 'FE', capacity: 29 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = classrooms.filter(classroom => {
+      return classroom.program === 'FE';
+    });
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
+    // IN: Array of objects
+    // OUT: Array of objects
+    // filter through classrooms and return if the cr's program === 'FE'
   },
 
   totalCapacities() {
@@ -368,21 +373,36 @@ const classPrompts = {
     //   beCapacity: 96
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = classrooms.reduce((acc, classroom) => {
+      if (classroom.program === 'FE') {
+        acc.feCapacity += classroom.capacity;
+      } else {
+        acc.beCapacity += classroom.capacity;
+      }
+
+      return acc;
+    }, {feCapacity: 0, beCapacity: 0});
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
+    // IN: Array of objects
+    // OUT: Object with two keys whos falue is the sum of the capacity
+    // counted separately by 'FE' and 'BE'
+    // reduce to array and create new objects then push into new array
   },
 
   sortByCapacity() {
     // Return the array of classrooms sorted by their capacity (least capacity to greatest)
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = classrooms.sort((a, b) => a.capacity - b.capacity);
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
+    // IN: Array of objects
+    // OUT: Array
+    // sort() by capacity a-b
   }
 };
 
