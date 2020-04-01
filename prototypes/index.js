@@ -425,11 +425,20 @@ const bookPrompts = {
     //   'Catch-22', 'Treasure Island']
 
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = books.reduce((acc, book) => {
+      if (book.genre !== 'Horror' && book.genre !== 'True Crime') {
+        acc.push(book.title)
+      }
+      return acc;
+    }, []);
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
+    // IN: Array of objects
+    // OUT: Array of book titles
+    // if the books genre is NOT horror or true Crime
+    // reduce to an array and push if above conditional passes
 
   },
   getNewBooks() {
@@ -440,11 +449,24 @@ const bookPrompts = {
     //  { title: 'Life of Pi', year: 2001 },
     //  { title: 'The Curious Incident of the Dog in the Night-Time', year: 2003 }]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = books.reduce((acc, book) => {
+      if (book.published >= 1990) {
+        const newObj = {
+          'title': book.title,
+          'year': book.published
+        }
+        acc.push(newObj);
+      }
+      return acc;
+    }, []);
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
+    // IN: Array of objects
+    // OUT: Array of objects
+    // conditonal to check if publishing year is >= 1990 && <= 2001
+    // reduce to an array and push an object with the title of the book and the year both as key value pairs
   }
 
 };
