@@ -112,11 +112,24 @@ const clubPrompts = {
     //   ...etc
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = clubs.reduce((acc, club) => {
+      club.members.forEach(member => {
+        if (!acc[member]) {
+          acc[member] = [];
+        }
+        acc[member].push(club.club);
+      })
+      return acc;
+    }, {});
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
+    // IN: Array of objects
+    // OUT: Object - user reduce() and set to an objects
+    // iterate over clubs then members array for each club
+    // set a key on acc with all the names not repeating of people
+    // values are of the clubs they are a part of
   }
 };
 
