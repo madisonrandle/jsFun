@@ -207,11 +207,20 @@ const cakePrompts = {
     //    ..etc
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.map(cake => {
+      return {
+        'flavor': cake.cakeFlavor,
+        'inStock': cake.inStock
+      }
+    });
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // IN: Array of objects
+    // OUT: Array of objects
+    // map because array will be of the same length
+    // return an object of the flavor as a key and values
+    // inStock as a key and values
   },
 
   onlyInStock() {
@@ -235,22 +244,32 @@ const cakePrompts = {
     // ..etc
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.filter(cake => {
+      return cake.inStock > 0;
+    });
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // IN: Array of objects
+    // OUT: An array of only the cake objects whos inStock value is greater than 0
+    // filter
   },
 
   totalInventory() {
     // Return the total amount of cakes in stock e.g.
     // 59
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-    return result;
+    const result = cakes.reduce((acc, cake) => {
+      acc += cake.inStock;
+      return acc;
+    }, 0);
 
+    return result;
     // Annotation:
-    // Write your annotation here as a comment
+    // IN: Array of objects
+    // OUT: number
+    // reduce and use acc 0 as a counter to += each cakes value of inStock property
+
   },
 
   allToppings() {
@@ -258,11 +277,19 @@ const cakePrompts = {
     // every cake in the dataset e.g.
     // ['dutch process cocoa', 'toasted sugar', 'smoked sea salt', 'berries', ..etc]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.reduce((acc, cake) => {
+      cake.toppings.forEach(topping => {
+        !acc.includes(topping) && acc.push(topping);
+      })
+      return acc;
+    }, []);
     return result;
-
     // Annotation:
-    // Write your annotation here as a comment
+    // In: Array of objects
+    // Out: An array of toppings without duplicates
+    // Reduce to an array and
+    // iterate over cake.toppings
+    // conditional if acc !includes() the topping, push topping into acc
   },
 
   groceryList() {
@@ -276,11 +303,26 @@ const cakePrompts = {
     //    ...etc
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.reduce((acc, cake) => {
+      cake.toppings.forEach(topping => {
+        if (!acc[topping]) {
+          acc[topping] = 0;
+        }
+        acc[topping] += 1;
+
+      })
+
+      return acc;
+    }, {});
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // IN: Array of objects
+    // OUT: objects
+    // reduce to an object
+    // iterate over each cake's toppings
+    // make a key for each topping starting with a value of 1
+    //conditional if that key exists, += 1 to its value
   }
 };
 
