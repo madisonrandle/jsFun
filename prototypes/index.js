@@ -27,21 +27,31 @@ const kittyPrompts = {
 
     // Return an array of just the names of kitties who are orange e.g.
     // ['Tiger', 'Snickers']
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = kitties.reduce((acc, kitty) => {
+      kitty.color === 'orange' && acc.push(kitty.name)
+      return acc;
+    }, []);
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
+    // IN: Array of objects
+    // OUT: Array of names
+    // Conditional on each element to check if color propert === 'orange'
+    // reduce to push only the name property of elements that match condition into new array
   },
 
   sortByAge() {
     // Sort the kitties by their age
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = kitties.sort((a,b) => b.age - a.age);
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
+    // IN: Array of objects
+    // OUT: Array of the same number of objects with the same properties
+    // Sort() by age
   },
 
   growUp() {
@@ -58,8 +68,20 @@ const kittyPrompts = {
     // },
     // ...etc]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = kitties.reduce((acc, kitty) => {
+      kitty.age += 2;
+      acc.push(kitty);
+      return acc;
+    }, []);
     return result;
+  }
+};
+
+// Annotation:
+// Write your annotation here as a comment
+// IN: Array of objects
+// OUT: Array of kitties whos age has each increased by 2 years
+// map and += their age by 2
   }
 };
 
