@@ -161,11 +161,22 @@ const modPrompts = {
     //   { mod: 4, studentsPerInstructor: 8 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = mods.reduce((acc, mod) => {
+      const newObj = {
+        'mod': mod.mod,
+        'studentsPerInstructor': mod.students / mod.instructors
+      }
+      acc.push(newObj);
+      return acc;
+    }, []);
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // IN: Array of objects
+    // OUT: Array of objects
+    // reduce to create a new array that we can push objects with a mod key and studentsPerInstructor key
+    // set mod key to value of mod on each object
+    // set studentsPerInstructor key to students / instructors
   }
 };
 
