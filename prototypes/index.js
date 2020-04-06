@@ -755,11 +755,30 @@ const turingPrompts = {
     //  { name: 'Robbie', studentCount: 18 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = instructors.reduce((acc, instructor) => {
+      cohorts.forEach(cohort => {
+        if (instructor.module === cohort.module) {
+          const newObj = {
+            name: instructor.name,
+            studentCount: cohort.studentCount
+          }
+          acc.push(newObj);
+        }
+      });
+      return acc;
+    }, []);
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // IN: Array of instructor objects
+      // A second array of cohort objects
+    // OUT: Array of objects
+    // reduce to an array through instructors
+    // iterate over cohorts
+      // if the instructor.module === cohort.module
+      // create a new object with a key of 'name' whos value is the instructor.name
+        // And another key of 'studentCount' whos value is the cohort.studentCount
+      // push the new object into the acc
   },
 
   studentsPerInstructor() {
@@ -769,11 +788,25 @@ const turingPrompts = {
     // cohort1804: 10.5
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cohorts.reduce((acc, cohort) => {
+      const filteredInstructors = instructors.filter(instructor => instructor.module === cohort.module);
+      acc[`cohort${cohort.cohort}`] = cohort.studentCount / filteredInstructors.length;
+
+      return acc;
+    }, {});
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // IN: Array of instructor objects
+      // A second array of cohort objects
+    // OUT: Object
+    // reduce to an object over cohorts
+    // assign variable to sort instructors by module
+      // iterate over sorted instructors
+      // filter instructors whos module === 1, 2, 3, 4
+      // go over each filtered array and
+        // assign each key of the acc to a cohort matching the module being looked at (with the filter)
+        // divide the studentCount by length of the filter being looked at
   },
 
   modulesPerTeacher() {
@@ -791,11 +824,28 @@ const turingPrompts = {
     //     Will: [1, 2, 3, 4]
     //   }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = instructors.reduce((acc, instructor) => {
+      acc[instructor.name] = [];
+      cohorts.forEach(cohort => {
+        cohort.curriculum.forEach(subject => {
+          if (instructor.teaches.includes(subject) && !acc[instructor.name].includes(cohort.module)) {
+            acc[instructor.name].push(cohort.module);
+          }
+        })
+      })
+      return acc;
+    }, {});
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // IN: Array of instructor objects
+      // A second array of cohort objects
+    // OUT: Object with a key of each instructor.name whos value is an array
+    // reduce to an object over instructors
+    // iterate over cohorts
+      // iterate over cohort.curriculum
+      // conditional if inststructor.teaches includes the curriculum
+        // inside the acc push the cohort.module
   },
 
   curriculumPerTeacher() {
@@ -808,11 +858,29 @@ const turingPrompts = {
     //   recursion: [ 'Pam', 'Leta' ]
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cohorts.reduce((acc, cohort) => {
+      cohort.curriculum.forEach(subject => {
+        acc[subject] = [];
+        instructors.forEach(instructor => {
+          if (instructor.teaches.includes(subject) && !acc[subject].includes(instructor.name)) {
+            acc[subject].push(instructor.name);
+          };
+        });
+      });
+      return acc;
+    }, {});
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // IN: Array of instructor objects
+      // A second array of cohort objects
+    // OUT: Object
+    // reduce to an object through cohorts
+      // iterate over cohort.curriculum
+      // create keys on the acc for each subject with a value of an empty array
+    // iterate over instructors
+      // conditional if instructor.teaches.includes(subject)
+      // push the instructor.name into that subject key
   }
 };
 
