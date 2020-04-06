@@ -911,11 +911,34 @@ const bossPrompts = {
     //   { bossName: 'Scar', sidekickLoyalty: 16 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = Object.keys(bosses).reduce((acc, boss) => {
+      const newObj = {
+        bossName: bosses[boss].name,
+        sidekickLoyalty: 0
+      }
+      sidekicks.forEach(sidekick => {
+        bosses[boss].sidekicks.forEach(el => {
+          if (el.name === sidekick.name) {
+            newObj.sidekickLoyalty += sidekick.loyaltyToBoss;
+          };
+        });
+      });
+      acc.push(newObj);
+      return acc;
+    }, []);
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // IN: Object of boss objects
+      // Array of sidekick objects
+    // OUT: Array
+
+    // reduce to an array over Object.keys(bosses)
+      // create a new object with a key of bossName set to a value of the boss.name
+        // and a key of sidekickLoyalty with a value of 0
+    // iterate over sidekicks
+    // conditional to check if boss.sidekicks.includes(sidekick)
+        // access the new object key of sidekickLoyalty and += sidekick.loyaltyToBoss
   }
 };
 
