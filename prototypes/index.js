@@ -531,17 +531,15 @@ const weatherPrompts = {
     //   temperature: { high: 49, low: 38 }
     // }
 
-    const result = 'here';
-    return result;
+    const result = weather.sort((a, b) => b.humidity - a.humidity);
+    return result.shift();
 
     // Annotation:
     // Write your annotation here as a comment
     // IN: Array of objects
-    // OUT: object of el.location
-    // set a counter and
-    // after comparing all el.himidity
-    // find() the el obj whos humidity is highest
-
+    // OUT: Object whos humidity is the highest
+    // sort the objects in weather array by humidity b.humidity - a.humidity
+    // return the shift() value;
   }
 };
 
