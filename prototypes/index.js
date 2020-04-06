@@ -82,8 +82,8 @@ const kittyPrompts = {
 // IN: Array of objects
 // OUT: Array of kitties whos age has each increased by 2 years
 // map and += their age by 2
-  }
-};
+
+
 
 
 
@@ -485,11 +485,17 @@ const weatherPrompts = {
     // return an array of all the average temperatures. Eg:
     // [ 40, 40, 44.5, 43.5, 57, 35, 65.5, 62, 14, 46.5 ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = weather.reduce((acc, el) => {
+      acc.push((el.temperature.high + el.temperature.low) / 2);
+      return acc;
+    }, []);
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
+    // IN: Array of objects
+    // OUT: Array of average temperatures
+    // reduce to a number
   },
 
   findSunnySpots() {
@@ -499,11 +505,21 @@ const weatherPrompts = {
     // 'New Orleans, Louisiana is sunny.',
     // 'Raleigh, North Carolina is mostly sunny.' ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = weather.reduce((acc, el) => {
+      if (el.type === 'sunny' || el.type === 'mostly sunny') {
+        acc.push(`${el.location} is ${el.type}.`)
+      }
+      return acc;
+    }, []);
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
+    // IN: Array of objects
+    // OUT: Array of sentences
+    // reduce to an array
+    // write a conditional to check if el.type is === 'sunny' || 'mostly sunny'
+    // if true, push an interpolated sentence into the reduced array
   },
 
   findHighestHumidity() {
@@ -515,11 +531,16 @@ const weatherPrompts = {
     //   temperature: { high: 49, low: 38 }
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = 'here';
     return result;
 
     // Annotation:
     // Write your annotation here as a comment
+    // IN: Array of objects
+    // OUT: object of el.location
+    // set a counter and
+    // after comparing all el.himidity
+    // find() the el obj whos humidity is highest
 
   }
 };
@@ -609,11 +630,17 @@ const breweryPrompts = {
     // Return the total beer count of all beers for every brewery e.g.
     // 40
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = breweries.reduce((acc, brewery) => {
+      acc += brewery.beers.length;
+      return acc;
+    }, 0);
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // IN: Array of objects
+    // Out: number
+    // reduce to a number through the breweries array
+    // += the acc to the length of each beers array
   },
 
   getBreweryBeerCount() {
@@ -625,11 +652,21 @@ const breweryPrompts = {
     // ...etc.
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = breweries.reduce((acc, brewery) => {
+      const newObj = {
+        name: brewery.name,
+        beerCount: brewery.beers.length
+      }
+      acc.push(newObj);
+      return acc;
+    }, []);
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // IN: Array of objects
+    // OUT: Array of objects
+      // Reduce to an array
+      // on each iteration create a new object and push that into the acc
   },
 
   findHighestAbvBeer() {
@@ -637,16 +674,24 @@ const breweryPrompts = {
     // e.g.
     // { name: 'Barrel Aged Nature\'s Sweater', type: 'Barley Wine', abv: 10.9, ibu: 40 }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = breweries.reduce((acc, brewery) => {
+      const findHighestAbvBeer = brewery.beers.sort((a, b) => b.abv - a.abv);
+      acc.push(findHighestAbvBeer.shift());
+      return acc.sort((a, b) => b.abv - a.abv);
+    }, []).shift();
+
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // IN: Array of objects
+    // OUT: object
+    // reduce to an array through my breweries and sort that b.abv - a.abv
+    // assign the reduce to a variable so I can shift the highest abv beer object at the end
+    // iterate through each brewerys beers array
+      // assign that to a variable to then sort b.abv - a.abv
+      // push the shift return into my reducer
   }
 };
-
-
-
 
 
 
