@@ -561,11 +561,18 @@ const nationalParksPrompts = {
     //   parksVisited: ["Rocky Mountain", "Acadia", "Zion"]
     //}
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = nationalParks.reduce((acc, park) => {
+      park.visited ? acc.parksVisited.push(park.name) : acc.parksToVisit.push(park.name);
+
+      return acc;
+    }, {parksToVisit: [], parksVisited: []});
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // IN: Array of objects
+    // OUT: Object
+    // reduce to a new array with two keys each with an array value
+    // write a conditional if visited is true push to the second key else push to the first key
   },
 
   getParkInEachState() {
@@ -578,11 +585,21 @@ const nationalParksPrompts = {
     // { Florida: 'Everglades' } ]
 
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = nationalParks.reduce((acc, park) => {
+      const newObj = {};
+        newObj[park.location] = park.name;
+
+      acc.push(newObj);
+      return acc;
+    }, []);
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // IN: Array of objects
+    // OUT: Array of objects
+    // reduce to a new array
+    // create a new object with each iteration and set the key to the el.location and its value to the el.name
+    // push the new object into the acc
   },
 
   getParkActivities() {
@@ -601,11 +618,21 @@ const nationalParksPrompts = {
     //   'backpacking',
     //   'rock climbing' ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = nationalParks.reduce((acc, park) => {
+      park.activities.forEach(activity => {
+        !acc.includes(activity) && acc.push(activity);
+      })
+      return acc;
+    }, []);
     return result;
 
     // Annotation:
-    // Write your annotation here as a comment
+    // IN: Array of objects
+    // OUT: Array of activities
+    // reduce to an array throught nationalParks
+    // iterate over each park's activities
+    // write conditional if the acc doesnt include the activity
+      // then push the activiy into the acc
   }
 };
 
